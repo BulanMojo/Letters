@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: radial-gradient(hsl(240, 60%, 5%), hsl(240, 30%, 2%));
+  overflow: hidden;
+  font-family: "Itim", cursive;
+}
+
+.background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: transparent url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+  opacity: 0.3;
+  z-index: 0;
+}
+.frame {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Cards */
+.card-stack {
+  position: relative;
+  z-index: 2;
+  width: 320px;
+  height: 200px;
+  min-width: 320px;   /* keep container width fixed */
+  min-height: 200px;  /* keep container height fixed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card,
+.card1,
+.card2,
+.card3,
+.card4,
+.card5 {
+  position: absolute;
+  width: 100%;
+  height: 200%;
+  background: hsla(327, 97%, 60%, 0.1);
+  backdrop-filter: blur(8px);
+  border: 2px solid hsla(337, 96%, 21%, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 2px hsla(323, 58%, 30%, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 2.97rem;
+  color: hsl(0, 0%, 100%);
+  cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  -webkit-text-stroke: 1px hsla(337, 96%, 21%, 0.8);
+}
+
+.card { z-index: 6; }
+.card1 { z-index: 5; transform: translateY(4px); }
+.card2 { z-index: 4; transform: translateY(8px); }
+.card3 { z-index: 3; transform: translateY(12px); }
+.card4 { z-index: 2; transform: translateY(16px); }
+.card5 { z-index: 1; transform: translateY(20px); }
+
+/* Card animation */
+@keyframes roll-out-left {
+  0% { transform: translateX(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateX(-1000px) rotate(-540deg); opacity: 0; }
+}
+.roll-out-left { animation: roll-out-left 1s ease forwards; }
+
+.tip {
+  position: absolute;
+  bottom: 30px;
+  color: hsl(0, 0%, 80%);
+  font-size: 0.9rem;
+  z-index: 2;
+}
+
+#fireworks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* behind cards but above background */
+  pointer-events: none; /* don't block clicks */
+}

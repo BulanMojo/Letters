@@ -2,7 +2,9 @@
 <html lang="ms">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="handheldFriendly" content="true">
+    <meta name="mobileOptimized" content="width">
     <title>Interactive Card Stack</title>
     <meta name="description" content="Interactive card stack with messages" />
 
@@ -12,6 +14,45 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="globals.css" />
     <link rel="stylesheet" href="style.css" />
+    
+    <style>
+      /* Mobile-specific optimizations */
+      @media (max-width: 768px) {
+        body {
+          -webkit-tap-highlight-color: transparent;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          user-select: none;
+        }
+        
+        .card, .card1, .card2, .card3, .card4, .card5 {
+          min-height: 120px !important;
+          padding: 20px !important;
+        }
+        
+        .tip {
+          font-size: 14px !important;
+          padding: 0 20px !important;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .card, .card1, .card2, .card3, .card4, .card5 {
+          min-height: 100px !important;
+          padding: 15px !important;
+          font-size: 16px !important;
+        }
+        
+        .card-stack {
+          padding: 10px !important;
+        }
+      }
+      
+      /* Prevent zoom on double-tap */
+      * {
+        touch-action: manipulation;
+      }
+    </style>
   </head>
 
   <body>
@@ -22,15 +63,27 @@
 
       <!-- Card Stack -->
       <section class="card-stack">
-        <article class="card"><p>Hi<br />Apa Khabar</p></article>
-        <article class="card1"><p>Lama x<br />borak</p></article>
-        <article class="card2"><p>harap kau<br />sihat dan baik<br />saja</p></article>
-        <article class="card3"><p>aku just<br />straight<br />to the point</p></article>
-        <article class="card4"><p>Aku Harap<br />kau maafkan<br />aku jikalau<br />aku buat salah</p></article>
-        <article class="card5"><p>dan aku harap<br />kita jadi<br />baik mcm<br />dulu</p></article>
+        <article class="card" role="button" tabindex="0" aria-label="First card message">
+          <p>Hi<br />Apa Khabar</p>
+        </article>
+        <article class="card1" role="button" tabindex="0" aria-label="Second card message">
+          <p>Lama x<br />borak</p>
+        </article>
+        <article class="card2" role="button" tabindex="0" aria-label="Third card message">
+          <p>harap kau<br />sihat dan baik<br />saja</p>
+        </article>
+        <article class="card3" role="button" tabindex="0" aria-label="Fourth card message">
+          <p>aku just<br />straight<br />to the point</p>
+        </article>
+        <article class="card4" role="button" tabindex="0" aria-label="Fifth card message">
+          <p>Aku Harap<br />kau maafkan<br />aku jikalau<br />aku buat salah</p>
+        </article>
+        <article class="card5" role="button" tabindex="0" aria-label="Sixth card message">
+          <p>dan aku harap<br />kita jadi<br />baik mcm<br />dulu</p>
+        </article>
       </section>
 
-      <p class="tip">💡 Tip: Click cards to see the next one</p>
+      <p class="tip">💡 Tap cards to see the next one</p>
     </main>
 
     <!-- Scripts -->

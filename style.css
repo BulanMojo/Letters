@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
 
+* {
+  box-sizing: border-box;
+  touch-action: manipulation;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -7,9 +12,14 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   background: radial-gradient(hsl(240, 60%, 5%), hsl(240, 30%, 2%));
   overflow: hidden;
   font-family: "Itim", cursive;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .background::before {
@@ -20,13 +30,17 @@ body {
   opacity: 0.3;
   z-index: 0;
 }
+
 .frame {
   position: relative;
   width: 100%;
   height: 100vh;
+  height: -webkit-fill-available;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
 #background {
@@ -37,17 +51,18 @@ body {
   z-index: 0;
 }
 
-/* Cards */
+/* Cards - Mobile Responsive */
 .card-stack {
   position: relative;
   z-index: 2;
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
   height: 200px;
-  min-width: 320px;   /* keep container width fixed */
-  min-height: 200px;  /* keep container height fixed */
+  min-height: 180px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 60px;
 }
 
 .card,
@@ -58,7 +73,7 @@ body {
 .card5 {
   position: absolute;
   width: 100%;
-  height: 200%;
+  height: 100%;
   background: hsla(327, 97%, 60%, 0.1);
   backdrop-filter: blur(8px);
   border: 2px solid hsla(337, 96%, 21%, 0.3);
@@ -68,33 +83,142 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 2.97rem;
+  font-size: clamp(1.5rem, 6vw, 2.97rem);
   color: hsl(0, 0%, 100%);
   cursor: pointer;
   transition: transform 0.4s ease, opacity 0.4s ease;
   -webkit-text-stroke: 1px hsla(337, 96%, 21%, 0.8);
+  padding: 20px;
 }
 
+/* Touch-friendly card sizes for mobile */
+@media (max-width: 768px) {
+  .card-stack {
+    height: 180px;
+    min-height: 160px;
+    max-width: 280px;
+  }
+  
+  .card,
+  .card1,
+  .card2,
+  .card3,
+  .card4,
+  .card5 {
+    padding: 15px;
+    font-size: clamp(1.3rem, 5vw, 2.5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .card-stack {
+    height: 160px;
+    min-height: 140px;
+    max-width: 260px;
+  }
+  
+  .card,
+  .card1,
+  .card2,
+  .card3,
+  .card4,
+  .card5 {
+    padding: 12px;
+    font-size: clamp(1.2rem, 4.5vw, 2.2rem);
+    -webkit-text-stroke: 0.5px hsla(337, 96%, 21%, 0.8);
+  }
+  
+  .frame {
+    padding: 15px;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 360px) {
+  .card-stack {
+    height: 140px;
+    min-height: 120px;
+    max-width: 240px;
+  }
+  
+  .card,
+  .card1,
+  .card2,
+  .card3,
+  .card4,
+  .card5 {
+    padding: 10px;
+    font-size: clamp(1.1rem, 4vw, 2rem);
+  }
+}
+
+/* Card stacking with responsive offsets */
 .card { z-index: 6; }
-.card1 { z-index: 5; transform: translateY(4px); }
-.card2 { z-index: 4; transform: translateY(8px); }
-.card3 { z-index: 3; transform: translateY(12px); }
-.card4 { z-index: 2; transform: translateY(16px); }
-.card5 { z-index: 1; transform: translateY(20px); }
+.card1 { z-index: 5; transform: translateY(3px); }
+.card2 { z-index: 4; transform: translateY(6px); }
+.card3 { z-index: 3; transform: translateY(9px); }
+.card4 { z-index: 2; transform: translateY(12px); }
+.card5 { z-index: 1; transform: translateY(15px); }
+
+/* Adjust stacking for smaller screens */
+@media (max-width: 480px) {
+  .card1 { transform: translateY(2px); }
+  .card2 { transform: translateY(4px); }
+  .card3 { transform: translateY(6px); }
+  .card4 { transform: translateY(8px); }
+  .card5 { transform: translateY(10px); }
+}
 
 /* Card animation */
 @keyframes roll-out-left {
   0% { transform: translateX(0) rotate(0deg); opacity: 1; }
   100% { transform: translateX(-1000px) rotate(-540deg); opacity: 0; }
 }
-.roll-out-left { animation: roll-out-left 1s ease forwards; }
+.roll-out-left { 
+  animation: roll-out-left 1s ease forwards; 
+}
 
 .tip {
   position: absolute;
-  bottom: 30px;
+  bottom: 20px;
   color: hsl(0, 0%, 80%);
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 3vw, 0.9rem);
   z-index: 2;
+  text-align: center;
+  padding: 0 20px;
+  width: 100%;
+}
+
+/* Landscape orientation support */
+@media (max-height: 500px) and (orientation: landscape) {
+  .frame {
+    flex-direction: row;
+    gap: 40px;
+  }
+  
+  .card-stack {
+    margin-bottom: 0;
+    height: 150px;
+    max-width: 250px;
+  }
+  
+  .tip {
+    position: fixed;
+    bottom: 10px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Very small height devices */
+@media (max-height: 600px) {
+  .card-stack {
+    height: 140px;
+    min-height: 120px;
+  }
+  
+  .tip {
+    bottom: 15px;
+  }
 }
 
 #fireworks {
@@ -103,6 +227,35 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1; /* behind cards but above background */
-  pointer-events: none; /* don't block clicks */
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* High DPI screens optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .card,
+  .card1,
+  .card2,
+  .card3,
+  .card4,
+  .card5 {
+    backdrop-filter: blur(12px);
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card1,
+  .card2,
+  .card3,
+  .card4,
+  .card5 {
+    transition: opacity 0.4s ease;
+  }
+  
+  .roll-out-left {
+    animation: none;
+    opacity: 0;
+  }
 }
